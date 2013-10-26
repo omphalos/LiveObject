@@ -62,7 +62,8 @@
   }
 
   LiveObject.prototype._onStorage = function(evt) {
-    if(evt.key !== _key) return
+    var self = this
+    if(evt.key !== self._key) return
     var record = JSON.parse(evt)
     Object.keys(record).forEach(function(key) {
       if(self.hasOwnProperty(key))
@@ -74,14 +75,13 @@
 
   LiveObject.prototype._destroy = function() {
     if(window.removeEventListener)
-      window.removeEventListener('storage', self._onStorage, false)
+      window.removeEventListener('storage', this._onStorage, false)
     else if(window.detachEvent)
-      window.detachEvent('onstorage', self._onStorage)
+      window.detachEvent('onstorage', this._onStorage)
   }
 
   root.LiveObject = LiveObject
 
 })(this)
-
 
 
